@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tulsi - Health Companion</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#0B0C10">
+    
+    <!-- Premium Font Loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;600&family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;600&family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap"></noscript>
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <!-- Onboarding Wizard -->
+    <div id="onboarding-wizard" class="container hidden" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center;">
+        
+        <div id="step-1" class="wizard-step glass-panel">
+            <h2 class="display-font">Welcome to Tulsi.</h2>
+            <p class="text-secondary" style="margin-bottom: 24px;">Your private, offline health companion.</p>
+            <label>What's your name?</label>
+            <input type="text" id="ob-name" placeholder="Name">
+            <label>Gender</label>
+            <select id="ob-gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+            <button class="btn-primary" onclick="App.Wizard.next()">Next</button>
+        </div>
+
+        <div id="step-2" class="wizard-step hidden glass-panel">
+            <h2 class="display-font">Your Body</h2>
+            <p class="text-secondary" style="margin-bottom: 24px;">Used strictly to calculate baseline targets.</p>
+            <label>Age (years)</label>
+            <input type="number" id="ob-age" placeholder="25">
+            <label>Height (cm)</label>
+            <input type="number" id="ob-height" placeholder="170">
+            <label>Weight (kg)</label>
+            <input type="number" id="ob-weight" placeholder="70">
+            <div class="flex-between">
+                <button class="btn-secondary" style="width: 45%;" onclick="App.Wizard.prev()">Back</button>
+                <button class="btn-primary" style="width: 45%;" onclick="App.Wizard.next()">Next</button>
+            </div>
+        </div>
+
+        <div id="step-3" class="wizard-step hidden glass-panel">
+            <h2 class="display-font">Diet & Goal</h2>
+            <label>Diet Type</label>
+            <select id="ob-diet">
+                <option value="veg">Vegetarian</option>
+                <option value="egg">Eggetarian</option>
+                <option value="nonveg">Non-Vegetarian</option>
+            </select>
+            <label>Region</label>
+            <select id="ob-region">
+                <option value="pan">Pan-India</option>
+                <option value="north">North</option>
+                <option value="south">South</option>
+                <option value="west">West</option>
+                <option value="east">East</option>
+            </select>
+            <label>Goal</label>
+            <select id="ob-goal">
+                <option value="maintain">Maintain Weight</option>
+                <option value="lose">Lose Weight</option>
+                <option value="gain">Gain Weight</option>
+            </select>
+            <label>Activity Level</label>
+            <select id="ob-activity">
+                <option value="sedentary">Sedentary (Office job)</option>
+                <option value="light">Light (1-3 days/week)</option>
+                <option value="moderate">Moderate (3-5 days)</option>
+                <option value="active">Active (Daily)</option>
+            </select>
+            <div class="flex-between">
+                <button class="btn-secondary" style="width: 45%;" onclick="App.Wizard.prev()">Back</button>
+                <button class="btn-primary" style="width: 45%;" onclick="App.Wizard.next()">Next</button>
+            </div>
+        </div>
+
+        <div id="step-4" class="wizard-step hidden glass-panel">
+            <h2 class="display-font">Schedule</h2>
+            <p class="text-secondary" style="margin-bottom: 24px;">To set up smart offline reminders.</p>
+            <label>Typical Wake Time</label>
+            <input type="time" id="ob-wake" value="07:00">
+            <label>Typical Sleep Time</label>
+            <input type="time" id="ob-sleep" value="23:00">
+            
+            <div style="margin-top: 16px; padding: 16px; background: rgba(0,0,0,0.2); border-radius: 16px; margin-bottom: 24px;">
+                <h4 style="margin-bottom: 8px;">Notifications</h4>
+                <p class="text-secondary" style="font-size: 0.85rem; margin-bottom: 12px;">Allow local reminders for water and meals. No data leaves your device.</p>
+                <button class="btn-secondary" style="width: 100%; border-color: rgba(255,255,255,0.2);" onclick="App.Notifications.requestPermission()">Arm Notifications</button>
+            </div>
+
+            <div class="flex-between">
+                <button class="btn-secondary" style="width: 45%;" onclick="App.Wizard.prev()">Back</button>
+                <button class="btn-primary" style="width: 45%;" onclick="App.Wizard.finish()">Start Growing</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="main-app" class="hidden">
+        <header class="container" style="padding-bottom: 0;">
+            <div class="flex-between">
+                <div class="greeting display-font" id="hdr-greeting">Hello, User</div>
+                <button onclick="App.Settings.open()" style="background:none; color:var(--text-secondary); transition: color 0.3s ease;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                </button>
+            </div>
+            <div id="hdr-date" class="text-secondary" style="font-size: 0.9rem; margin-bottom: 16px;"></div>
+        </header>
+
+        <main id="tab-content" class="container" style="padding-top: 0;"></main>
+
+        <!-- Floating Glass Navigation -->
+        <nav id="bottom-nav">
+            <a href="#" id="nav-today" class="nav-item active" onclick="App.Router.go('today')">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                Today
+            </a>
+            <a href="#" id="nav-log" class="nav-item" onclick="App.Router.go('log')">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                Log
+            </a>
+            <a href="#" id="nav-suggest" class="nav-item" onclick="App.Router.go('suggest')">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                Suggest
+            </a>
+            <a href="#" id="nav-track" class="nav-item" onclick="App.Router.go('track')">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                Track
+            </a>
+        </nav>
+    </div>
+
+    <!-- Modals Container -->
+    <div id="modals"></div>
+
+    <script src="/js/foodData.js"></script>
+    <script src="/js/engine.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>
