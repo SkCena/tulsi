@@ -2,29 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Tulsi - Health Companion</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#12142B">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0B0C10">
     <link rel="apple-touch-icon" href="assets/Icon_192.png">
-    <meta name="description" content="Tulsi — a private, offline health companion for food, water and activity tracking, built for Indian diets.">
-
-    <!-- Non-blocking Google Fonts -->
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;600&family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;600&family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap"></noscript>
-
+    
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
     <!-- Onboarding Wizard -->
-    <div id="onboarding-wizard" class="container hidden">
-        <div class="progress-bar"><div id="ob-progress" class="progress-fill" style="width: 20%;"></div></div>
-
-        <div id="step-1" class="wizard-step">
+    <div id="onboarding-wizard" class="container hidden" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center;">
+        <div class="progress-bar"><div id="ob-progress" class="progress-fill" style="width: 10%;"></div></div>
+        
+        <div id="step-1" class="wizard-step glass-panel">
             <h2 class="display-font">Welcome to Tulsi.</h2>
             <p class="text-secondary" style="margin-bottom: 24px;">Your private, offline health companion.</p>
             <label>What's your name?</label>
@@ -34,7 +31,7 @@
             <button class="btn-primary" onclick="App.Wizard.next()">Next</button>
         </div>
 
-        <div id="step-2" class="wizard-step hidden">
+        <div id="step-2" class="wizard-step hidden glass-panel">
             <h2 class="display-font">Your Body</h2>
             <p class="text-secondary" style="margin-bottom: 24px;">Used strictly to calculate baseline targets.</p>
             <label>Age (years)</label><input type="number" id="ob-age" placeholder="25">
@@ -46,35 +43,58 @@
             </div>
         </div>
 
-        <div id="step-3" class="wizard-step hidden">
+        <div id="step-3" class="wizard-step hidden glass-panel">
             <h2 class="display-font">Diet & Goal</h2>
             <label>Diet Type</label>
             <select id="ob-diet"><option value="veg">Vegetarian</option><option value="egg">Eggetarian</option><option value="nonveg">Non-Vegetarian</option></select>
-            <label>Region (For Food Suggestions)</label>
+            <label>Region</label>
             <select id="ob-region"><option value="pan">Pan-India</option><option value="north">North</option><option value="south">South</option><option value="west">West</option><option value="east">East</option></select>
             <label>Goal</label>
             <select id="ob-goal"><option value="maintain">Maintain Weight</option><option value="lose">Lose Weight</option><option value="gain">Gain Weight</option></select>
             <label>Activity Level</label>
-            <select id="ob-activity"><option value="sedentary">Sedentary (Office job)</option><option value="light">Light (1-3 days/week)</option><option value="moderate">Moderate (3-5 days)</option><option value="active">Active (Daily)</option></select>
+            <select id="ob-activity"><option value="sedentary">Sedentary</option><option value="light">Light</option><option value="moderate">Moderate</option><option value="active">Active</option></select>
             <div class="flex-between">
                 <button class="btn-secondary" style="width: 45%;" onclick="App.Wizard.prev()">Back</button>
                 <button class="btn-primary" style="width: 45%;" onclick="App.Wizard.next()">Next</button>
             </div>
         </div>
 
-        <div id="step-4" class="wizard-step hidden">
+        <div id="step-4" class="wizard-step hidden glass-panel">
             <h2 class="display-font">Schedule</h2>
             <p class="text-secondary" style="margin-bottom: 24px;">To set up smart offline reminders.</p>
             <label>Typical Wake Time</label><input type="time" id="ob-wake" value="07:00">
             <label>Typical Sleep Time</label><input type="time" id="ob-sleep" value="23:00">
-
-            <div class="card" style="margin-top: 16px;">
-                <h4>Notifications</h4>
-                <p class="text-secondary" style="font-size: 0.85rem; margin-bottom: 12px;">Allow local reminders for water and meals. No data leaves your device.</p>
-                <button class="btn-secondary" onclick="App.Notifications.requestPermission()">Enable Notifications</button>
+            
+            <div style="margin-top: 16px; padding: 16px; background: rgba(0,0,0,0.2); border-radius: 16px; margin-bottom: 24px;">
+                <h4 style="margin-bottom: 8px;">Notifications</h4>
+                <p class="text-secondary" style="font-size: 0.85rem; margin-bottom: 12px;">Allow local reminders. No data leaves your device.</p>
+                <button class="btn-secondary" style="width: 100%; border-color: rgba(255,255,255,0.2);" onclick="App.Notifications.requestPermission()">Arm Notifications</button>
+            </div>
+            <div class="flex-between">
+                <button class="btn-secondary" style="width: 45%;" onclick="App.Wizard.prev()">Back</button>
+                <button class="btn-primary" style="width: 45%;" onclick="App.Wizard.next()">Next</button>
+            </div>
+        </div>
+        
+        <!-- NEW STEP 5: CUSTOM GOALS -->
+        <div id="step-5" class="wizard-step hidden glass-panel">
+            <h2 class="display-font">Your Targets</h2>
+            <p class="text-secondary" style="margin-bottom: 16px; font-size: 0.85rem;">We calculated your scientific baselines. You can override them below if you have custom goals.</p>
+            
+            <div style="background: rgba(242,179,61,0.1); border: 1px solid rgba(242,179,61,0.3); padding: 12px; border-radius: 12px; margin-bottom: 20px;">
+                <span class="text-secondary" style="font-size: 0.75rem; text-transform: uppercase;">Recommended</span>
+                <div class="flex-between" style="margin-top: 4px;">
+                    <span class="mono" style="color: var(--accent-food);" id="ob-rec-cal">-- kcal</span>
+                    <span class="mono" style="color: var(--accent-water);" id="ob-rec-water">-- ml</span>
+                </div>
             </div>
 
-            <div class="flex-between">
+            <label>Daily Calories (kcal)</label>
+            <input type="number" id="ob-cust-cal" placeholder="e.g. 2500">
+            <label>Daily Water (ml)</label>
+            <input type="number" id="ob-cust-water" placeholder="e.g. 4000">
+
+            <div class="flex-between" style="margin-top: 12px;">
                 <button class="btn-secondary" style="width: 45%;" onclick="App.Wizard.prev()">Back</button>
                 <button class="btn-primary" style="width: 45%;" onclick="App.Wizard.finish()">Start Growing</button>
             </div>
@@ -86,7 +106,7 @@
         <header class="container" style="padding-bottom: 0;">
             <div class="flex-between">
                 <div class="greeting display-font" id="hdr-greeting">Hello, User</div>
-                <button onclick="App.Settings.open()" style="background:none; color:var(--text-secondary);" aria-label="Settings">
+                <button onclick="App.Settings.open()" style="background:none; color:var(--text-secondary); transition: color 0.3s ease;">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                 </button>
             </div>
@@ -115,7 +135,6 @@
         </nav>
     </div>
 
-    <!-- Modals Container -->
     <div id="modals"></div>
 
     <script src="js/foodData.js"></script>
