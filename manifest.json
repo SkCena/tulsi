@@ -1,4 +1,5 @@
 {
+  "id": "/?source=pwa",
   "name": "Tulsi - Personal Health Companion",
   "short_name": "Tulsi",
   "description": "Your offline-first, personal companion for food, water, and activity tracking.",
@@ -21,6 +22,19 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "assets/Icon_512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "assets/Icon_512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ]
 }
