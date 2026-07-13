@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tulsi-v1';
+const CACHE_NAME = 'tulsi-v2';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
