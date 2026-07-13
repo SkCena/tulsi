@@ -8,7 +8,7 @@ window.App = {
     },
 
     init() {
-        if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(e => console.log(e));
+        if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(e => console.log(e));
         
         this.loadStorage();
         if (!this.state.profile) {
