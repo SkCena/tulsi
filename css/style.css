@@ -98,7 +98,7 @@ input:focus, select:focus { border-color: var(--accent-food); outline: none; }
 .flex-between { display: flex; justify-content: space-between; align-items: center; }
 
 /* Onboarding */
-#onboarding-wizard { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+#onboarding-wizard { min-height: 100vh; padding-top: 48px; padding-bottom: 48px; }
 .wizard-step { animation: fadeIn 0.3s ease-in-out; }
 .progress-bar { height: 4px; background: var(--surface-light); border-radius: 2px; margin-bottom: 32px; overflow: hidden; }
 .progress-fill { height: 100%; background: var(--accent-food); transition: width 0.3s ease; }
