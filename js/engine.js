@@ -41,37 +41,14 @@ window.Engine = {
     },
     
     // ==========================================
-    // THE $2000 GROWING VISUALS SYSTEM
+    // PREMIUM VISUALS CONNECTION
     // ==========================================
     getPlantVisuals(type, stage) {
-        /*
-         * BHAI, LOOK HERE! 
-         * To use your own images, simply replace the `return \`<svg>...\`` lines below with:
-         * return `<img src="path/to/your/image_stage_1.png" style="width:100%; height:100%; object-fit:contain;">`;
-         */
-        
-        const colors = { water: '#5FD9A4', food: '#F2B33D', exercise: '#FF6B4A' };
-        const c = colors[type];
-        
-        // Dynamic Glowing SVG Generator (Faadu level placeholders)
-        let visualHTML = '';
-        
-        if (stage === 0) {
-            visualHTML = `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="20" fill="none" stroke="${c}" stroke-width="2" stroke-dasharray="4 4" opacity="0.3"/></svg>`;
-        } else if (stage === 1 || stage === 2) {
-            visualHTML = `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="15" fill="${c}" opacity="0.8"/><circle cx="50" cy="50" r="25" fill="${c}" opacity="0.2"/></svg>`;
-        } else if (stage === 3 || stage === 4) {
-            visualHTML = `<svg viewBox="0 0 100 100"><path d="M50 80 Q30 50 50 20 Q70 50 50 80 Z" fill="${c}" opacity="0.9"/><circle cx="50" cy="50" r="30" fill="none" stroke="${c}" stroke-width="1" opacity="0.5"/></svg>`;
+        // Yeh line seedha tere naye plants.js ko trigger karegi!
+        if (window.Plants) {
+            return window.Plants.render(type, stage);
         } else {
-            // Level 5: The Masterpiece Mandala (Fully Bloomed)
-            visualHTML = `<svg viewBox="0 0 100 100">
-                <path d="M50 10 Q60 40 90 50 Q60 60 50 90 Q40 60 10 50 Q40 40 50 10 Z" fill="${c}" opacity="0.8"/>
-                <circle cx="50" cy="50" r="40" fill="none" stroke="${c}" stroke-width="2" stroke-dasharray="1 6"/>
-                <circle cx="50" cy="50" r="10" fill="#fff" opacity="0.9"/>
-            </svg>`;
+            return `<div style="color:white; font-size:10px;">Loading...</div>`;
         }
-
-        // Wrapper sets the CSS variable for the breathing glow effect in style.css
-        return `<div style="--glow-color: ${c}40; width:100%; height:100%;">${visualHTML}</div>`;
     }
 };
